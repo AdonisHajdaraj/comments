@@ -10,13 +10,13 @@ export default function Home() {
   const [replyText, setReplyText] = useState({});
   const [replyingTo, setReplyingTo] = useState(null);
   const [showEmojiReply, setShowEmojiReply] = useState(null);
-  const [filter, setFilter] = useState("latest"); // "latest" ose "mostLiked"
+  const [filter, setFilter] = useState("latest"); 
 
-  // Ref për dropdown
+
   const dropdownRef = useRef(null);
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  // Mbyll dropdown kur klikoj jashtë
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,7 +27,7 @@ export default function Home() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Shto koment
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim() === "") return;
@@ -49,12 +49,12 @@ export default function Home() {
     setShowEmoji(false);
   };
 
-  // Fshij koment
+
   const handleDelete = (id) => {
     setComments(comments.filter((c) => c.id !== id));
   };
 
-  // Shto reply
+ 
   const handleReply = (id) => {
     if (!replyText[id] || replyText[id].trim() === "") return;
 
@@ -86,7 +86,7 @@ export default function Home() {
     setShowEmojiReply(null);
   };
 
-  // Like / Dislike
+
   const handleReaction = (id, type, isReply = false, parentId = null) => {
     const updatedComments = comments.map((comment) => {
       if (isReply && comment.id === parentId) {
@@ -146,7 +146,7 @@ export default function Home() {
   const onEmojiClickReply = (id, emojiData) =>
     setReplyText({ ...replyText, [id]: (replyText[id] || "") + emojiData.emoji });
 
-  // Rendit komentet sipas filter
+
   const sortedComments = () => {
     if (filter === "latest") {
       return [...comments].sort((a, b) => b.date - a.date);
@@ -163,7 +163,7 @@ export default function Home() {
           💬 Sistemi i Komenteve
         </h1>
 
-        {/* Filter modern */}
+       
         <div className="flex justify-end mb-4">
           <div className="relative inline-block text-left" ref={dropdownRef}>
             <button
@@ -215,7 +215,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Form kryesor */}
+    
         <form onSubmit={handleSubmit} className="flex gap-3 mb-6 relative">
           <div className="flex-1 relative">
             <input
@@ -237,7 +237,7 @@ export default function Home() {
 
         {showEmoji && <div className="absolute z-10 mt-[-20px]"><EmojiPicker onEmojiClick={onEmojiClick} /></div>}
 
-        {/* Lista e komenteve */}
+       
         <ul className="space-y-4">
           {sortedComments().map((comment) => (
             <li key={comment.id} className="bg-gray-50 border border-gray-200 p-5 rounded-xl shadow-md hover:shadow-lg transition-shadow">
@@ -258,7 +258,7 @@ export default function Home() {
                     <button onClick={() => handleReaction(comment.id, "dislike")} className={`px-3 py-1 rounded-lg text-sm font-medium shadow transition ${comment.disliked ? "bg-red-600 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}>👎 {comment.dislikes}</button>
                   </div>
 
-                  {/* Reply input dhe lista e reply-ve */}
+          
                   {replyingTo === comment.id && (
                     <div className="mb-3">
                       <div className="flex gap-2 relative mt-3">
